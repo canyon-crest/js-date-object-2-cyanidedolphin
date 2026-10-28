@@ -16,7 +16,6 @@
 // element with ID "warmUpDate".
 
 // STEP 1: Create a new Date object using: let now = new Date();
-
 // STEP 2: Use .getDay() to get the day of the week as a number.
 //         Sunday = 0, Monday = 1, Tuesday = 2, ... Saturday = 6
 
@@ -30,6 +29,13 @@
 // STEP 5: Display the day name in the element with ID "warmUpDate"
 //         using document.getElementById("warmUpDate").innerHTML
 
+let now = new Date();
+let dayNumber = now.getDay();
+let days = ["Sunday", "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday"];
+let dayName = days[dayNumber];
+
+document.getElementById("warmUpDate").innerHTML = dayName;
 
 // ============================================
 //  PART 1: Current Date Display
@@ -50,6 +56,14 @@
 
 // STEP 10: Build the date string: month + "/" + day + "/" + year
 //          Display it in the element with ID "myDate"
+let today = new Date();
+
+let month = today.getMonth() + 1;
+let day = today.getDate();
+let year = today.getFullYear();
+
+let dateString = month + "/" + day + "/" + year;
+document.getElementById("myDate").innerHTML = dateString;
 
 
 // ============================================
@@ -70,6 +84,15 @@
 //          c) Display the elapsed time using .toFixed(3)
 //             in the element with ID "myTimer"
 
+let startTime = new Date().getTime();
+
+let timerId = setInterval(function () {
+    let currentTime = new Date().getTime();
+    let elapsed = (currentTime - startTime) / 1000;
+
+    document.getElementById("myTimer").innerHTML =
+        elapsed.toFixed(3);
+}, 10);
 
 // ============================================
 //  PART 3: Start/Stop Toggle Button
@@ -95,3 +118,25 @@
 //             - Start a new setInterval (same as STEP 12)
 //             - Change button innerHTML to "Stop"
 //             - Set running to true
+let running = true;
+
+document.getElementById("myBtn").addEventListener("click", function () {
+    if (running === true) {
+        clearInterval(timerId);
+        document.getElementById("myBtn").innerHTML = "Start";
+        running = false;
+    } else {
+        startTime = new Date().getTime();
+
+        timerId = setInterval(function () {
+            let currentTime = new Date().getTime();
+            let elapsed = (currentTime - startTime) / 1000;
+
+            document.getElementById("myTimer").innerHTML =
+                elapsed.toFixed(3);
+        }, 10);
+
+        document.getElementById("myBtn").innerHTML = "Stop";
+        running = true;
+    }
+});
